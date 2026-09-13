@@ -76,6 +76,22 @@ jobs:
                   versionCode 1
                   versionName '1.0.0'
               }
+
+              signingConfigs {
+                  release {
+                      storeFile file('../release-keystore.jks')
+                      storePassword System.getenv('BP_KEYSTORE_PASSWORD')
+                      keyAlias System.getenv('BP_KEY_ALIAS')
+                      keyPassword System.getenv('BP_KEY_PASSWORD')
+                  }
+              }
+
+              buildTypes {
+                  release {
+                      signingConfig signingConfigs.release
+                      minifyEnabled false
+                  }
+              }
           }
           EOF
 
@@ -231,11 +247,30 @@ jobs:
           }
           EOF
 
-      - name: Build APK
-        run: gradle --no-daemon assembleDebug
+      - name: Restore release keystore
+        shell: bash
+        env:
+          BP_KEYSTORE_BASE64: ${{ secrets.BP_KEYSTORE_BASE64 }}
+        run: |
+          if [ -z "$BP_KEYSTORE_BASE64" ]; then
+            echo "ERROR: BP_KEYSTORE_BASE64 secret is missing."
+            exit 1
+          fi
 
-      - name: Upload APK
+          echo "$BP_KEYSTORE_BASE64" | base64 --decode > release-keystore.jks
+
+          test -s release-keystore.jks
+
+      - name: Build signed Release APK
+        shell: bash
+        env:
+          BP_KEYSTORE_PASSWORD: ${{ secrets.BP_KEYSTORE_PASSWORD }}
+          BP_KEY_ALIAS: ${{ secrets.BP_KEY_ALIAS }}
+          BP_KEY_PASSWORD: ${{ secrets.BP_KEY_PASSWORD }}
+        run: gradle --no-daemon assembleRelease
+
+      - name: Upload signed APK
         uses: actions/upload-artifact@v4
         with:
-          name: bangla-pathshala-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: bangla-pathshala-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
