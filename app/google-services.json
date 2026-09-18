@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "179169472629",
+    "project_id": "bangla-pathsala",
+    "storage_bucket": "bangla-pathsala.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179169472629:android:85caea4a836bf3d947c83c",
+        "android_client_info": {
+          "package_name": "in.banglapathshala.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5WhL_ruZK3Ph4qEJTIEyJYh19DGwibeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
