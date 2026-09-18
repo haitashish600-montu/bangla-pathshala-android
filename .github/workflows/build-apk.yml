@@ -52,6 +52,7 @@ jobs:
           cat > build.gradle <<'EOF'
           plugins {
               id 'com.android.application' version '8.7.3' apply false
+              id 'com.google.gms.google-services' version '4.5.0' apply false
           }
           EOF
 
@@ -63,6 +64,7 @@ jobs:
           cat > app/build.gradle <<'EOF'
           plugins {
               id 'com.android.application'
+              id 'com.google.gms.google-services'
           }
 
           dependencies {
@@ -118,9 +120,8 @@ jobs:
 
           cat > app/src/main/AndroidManifest.xml <<'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
               <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+              <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
               <application
                   android:theme="@style/AppTheme"
@@ -131,21 +132,19 @@ jobs:
                   <activity
                       android:name=".MainActivity"
                       android:exported="true">
-
                       <intent-filter>
                           <action android:name="android.intent.action.MAIN" />
                           <category android:name="android.intent.category.LAUNCHER" />
                       </intent-filter>
-
                   </activity>
 
-              <service
-                  android:name=".MyFirebaseMessagingService"
-                  android:exported="false">
-                  <intent-filter>
-                      <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                  </intent-filter>
-              </service>
+                  <service
+                      android:name=".MyFirebaseMessagingService"
+                      android:exported="false">
+                      <intent-filter>
+                          <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                      </intent-filter>
+                  </service>
 
               </application>
           </manifest>
