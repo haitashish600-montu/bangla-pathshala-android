@@ -198,7 +198,8 @@ jobs:
                           MainActivity.this.filePathCallback = filePathCallback;
 
                           try {
-                              Intent intent = fileChooserParams.createIntent();
+                              Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                              intent.addCategory(Intent.CATEGORY_OPENABLE);
                               intent.setType("application/pdf");
                               intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
                               startActivityForResult(intent, FILE_CHOOSER_REQUEST_CODE);
