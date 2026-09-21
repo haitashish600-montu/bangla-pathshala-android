@@ -432,7 +432,7 @@ jobs:
           BP_KEYSTORE_PASSWORD: ${{ secrets.BP_KEYSTORE_PASSWORD }}
           BP_KEY_ALIAS: ${{ secrets.BP_KEY_ALIAS }}
           BP_KEY_PASSWORD: ${{ secrets.BP_KEY_PASSWORD }}
-        run: gradle --no-daemon assembleRelease
+        run: gradle --no-daemon assembleRelease bundleRelease
 
       - name: Upload signed APK
         uses: actions/upload-artifact@v4
