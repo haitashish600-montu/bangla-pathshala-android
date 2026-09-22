@@ -425,7 +425,12 @@ jobs:
           echo "$BP_KEYSTORE_BASE64" | base64 --decode > release-keystore.jks
 
           test -s release-keystore.jks
-
+- name: Add Play registration proof
+  env:
+    ADI_SNIPPET: ${{ secrets.BP_ADI_SNIPPET }}
+  run: |
+    mkdir -p app/src/main/assets
+    printf '%s' "$ADI_SNIPPET" > app/src/main/assets/adi-registration.properties
       - name: Build signed Release APK
         shell: bash
         env:
